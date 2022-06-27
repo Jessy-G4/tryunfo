@@ -11,16 +11,27 @@ class App extends React.Component {
       Nome: '',
       descricao: '',
       Atributo1: 0,
+      Atributo2: 0,
+      Atributo3: 0,
       url: '',
       Raridade: '',
       Tryunfo: '',
-      // submit: '',
     };
   }
 
- handleChance = (evento) => {
+isSaveButtonDisabled = () => true
+
+ handleChange = (evento) => {
    const { name, type, checked, value } = evento.target;
    this.setState({ [name]: type === 'checkbox' ? checked : value });
+ }
+
+ teste = () => {
+   const arrayTodosOsEstados = Object.values(this.state).map((get) => get);
+   const filtrando = arrayTodosOsEstados.filter((get) => get.length > 1);
+   const sete = 7;
+   if (filtrando.length === sete) this.isSaveButtonDisabled = () => false;
+   else this.isSaveButtonDisabled = () => true;
  }
 
  render() {
@@ -33,7 +44,6 @@ class App extends React.Component {
      url,
      Raridade,
      Tryunfo,
-     //  submit,
    } = this.state;
    return (
      <div>
@@ -48,8 +58,8 @@ class App extends React.Component {
          cardRare={ Raridade }
          cardTrunfo={ Tryunfo }
          hasTrunfo
-         isSaveButtonDisabled
-         onInputChange={ this.handleChance }
+         isSaveButtonDisabled={ this.isSaveButtonDisabled }
+         onInputChange={ this.handleChange }
          onSaveButtonClick
        />
        <Card
