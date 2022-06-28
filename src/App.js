@@ -16,22 +16,22 @@ class App extends React.Component {
       url: '',
       Raridade: '',
       Tryunfo: '',
+      submit: true,
     };
   }
 
-isSaveButtonDisabled = () => true
+isSaveButtonDisabled = () => {
+  const arrayTodosOsEstados = Object.values(this.state).map((get) => get);
+  const filtrando = arrayTodosOsEstados.filter((get) => get.length > 1);
+  const cinco = 5;
+  return filtrando.length < cinco ? this.setState({ submit: true })
+    : this.setState({ submit: false });
+};
 
  handleChange = (evento) => {
    const { name, type, checked, value } = evento.target;
    this.setState({ [name]: type === 'checkbox' ? checked : value });
- }
-
- teste = () => {
-   const arrayTodosOsEstados = Object.values(this.state).map((get) => get);
-   const filtrando = arrayTodosOsEstados.filter((get) => get.length > 1);
-   const sete = 7;
-   if (filtrando.length === sete) this.isSaveButtonDisabled = () => false;
-   else this.isSaveButtonDisabled = () => true;
+   this.isSaveButtonDisabled();
  }
 
  render() {
@@ -44,6 +44,7 @@ isSaveButtonDisabled = () => true
      url,
      Raridade,
      Tryunfo,
+     submit,
    } = this.state;
    return (
      <div>
@@ -58,7 +59,7 @@ isSaveButtonDisabled = () => true
          cardRare={ Raridade }
          cardTrunfo={ Tryunfo }
          hasTrunfo
-         isSaveButtonDisabled={ this.isSaveButtonDisabled }
+         isSaveButtonDisabled={ submit }
          onInputChange={ this.handleChange }
          onSaveButtonClick
        />
