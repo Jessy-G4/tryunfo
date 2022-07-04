@@ -2,6 +2,10 @@ import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
 
+// JESSY DO FUTURO A FUNÇÃO limparESalvar FOI COMENTANDA UNS ELEMENTOS PARA EVITAR ERROS DE LINT, NÃO ESQUECE DE DESCOMENTAR QUANDO FOR USAR!!!
+// JESSY DO FUTURO A FUNÇÃO limparESalvar FOI COMENTANDA UNS ELEMENTOS PARA EVITAR ERROS DE LINT, NÃO ESQUECE DE DESCOMENTAR QUANDO FOR USAR!!!
+// JESSY DO FUTURO A FUNÇÃO limparESalvar FOI COMENTANDA UNS ELEMENTOS PARA EVITAR ERROS DE LINT, NÃO ESQUECE DE DESCOMENTAR QUANDO FOR USAR!!!
+
 class App extends React.Component {
   constructor() {
     super();
@@ -12,48 +16,11 @@ class App extends React.Component {
       Atributo2: 0,
       Atributo3: 0,
       url: '',
-      Raridade: undefined,
+      Raridade: 'normal',
       Tryunfo: true,
       submit: true,
     };
   }
-
-  // componentDidUpdate(prevProps, prevState) {
-  //   const { Nome, descricao, Atributo1, Atributo2, Atributo3, url } = prevState;
-  //   const valorMax = 90;
-  //   const valorTotalMax = 210;
-  //   const valorMinimo = 0;
-  //   if (Nome.length <= 1) {
-  //     this.setState({ submit: true });
-  //   }
-  //   if (url.length <= 1) {
-  //     this.setState({ submit: true });
-  //   }
-  //   if (descricao.length <= 1) {
-  //     this.setState({ submit: true });
-  //   }
-  //   if (Atributo1 > valorMax) {
-  //     tthis.setState((prev) => ({ submit: !prev }));
-  //   }
-  //   if (Atributo1 < valorMinimo) {
-  //     this.setState({ submit: true });
-  //   }
-  //   if (Atributo2 > valorMax) {
-  //     this.setState({ submit: true });
-  //   }
-  //   if (Atributo2 < valorMinimo) {
-  //     this.setState({ submit: true });
-  //   }
-  //   if (Atributo3 > valorMax) {
-  //     this.setState({ submit: true });
-  //   }
-  //   if (Atributo3 < valorMinimo) {
-  //     this.setState({ submit: true });
-  //   }
-  //   if (Atributo1 + Atributo2 + Atributo3 === valorTotalMax) {
-  //     this.setState({ submit: true });
-  //   }
-  // }
 
 isSaveButtonDisabled = () => {
   const arrayTodosOsEstados = Object.values(this.state).map((get) => get);
@@ -112,6 +79,34 @@ desabilitar = () => {
      () => this.desabilitar());
  }
 
+ limparESalvar = () => {
+   // NÃO ESQUECE DE COLOCAR O PARAMETRO DA FUNÇÃO "EVENTO"!!!!
+   //  evento.preventDefault();
+   //  const { Nome, descricao, Atributo1, Atributo2, Atributo3,
+   //    url, Raridade, Tryunfo } = this.state;
+   //  const salvar = [{
+   //    NomeSalvo: Nome,
+   //    descricaoSalvo: descricao,
+   //    Atributo1Salvo: Atributo1,
+   //    Atributo2Salvo: Atributo2,
+   //    Atributo3Salvo: Atributo3,
+   //    urlSalvo: url,
+   //    RaridadeSalvo: Raridade,
+   //    TryunfoSalvo: Tryunfo,
+   //  }];
+   this.setState({
+     Nome: '',
+     descricao: '',
+     Atributo1: 0,
+     Atributo2: 0,
+     Atributo3: 0,
+     url: '',
+     Raridade: 'normal',
+     Tryunfo: true,
+     submit: true,
+   });
+ }
+
  render() {
    const {
      Nome,
@@ -139,7 +134,7 @@ desabilitar = () => {
          hasTrunfo
          isSaveButtonDisabled={ submit }
          onInputChange={ this.handleChange }
-         onSaveButtonClick
+         onSaveButtonClick={ this.limparESalvar }
        />
        <Card
          cardName={ Nome }
