@@ -8,11 +8,11 @@ class App extends React.Component {
     this.state = {
       Nome: '',
       descricao: '',
-      Atributo1: undefined,
-      Atributo2: undefined,
-      Atributo3: undefined,
+      Atributo1: 0,
+      Atributo2: 0,
+      Atributo3: 0,
       url: '',
-      Raridade: '',
+      Raridade: undefined,
       Tryunfo: true,
       submit: true,
     };
@@ -57,10 +57,9 @@ class App extends React.Component {
 
 isSaveButtonDisabled = () => {
   const arrayTodosOsEstados = Object.values(this.state).map((get) => get);
-  const filtrando = arrayTodosOsEstados.filter((get) => get.length >= 1);
-  const cinco = 5;
-  console.log(arrayTodosOsEstados);
-  return filtrando.length < cinco ? this.setState({ submit: true })
+  // const filtrando = arrayTodosOsEstados.filter((get) => get.length >= 1);
+  const oito = 8;
+  return arrayTodosOsEstados.length < oito ? this.setState({ submit: true })
     : this.setState({ submit: false });
 };
 
@@ -70,13 +69,17 @@ desabilitar = () => {
   const valorMax = 90;
   const valorTotalMax = 210;
   const valorMinimo = 0;
-  if (Nome.length <= 1) {
+  const valor1 = Number(Atributo1);
+  const valor2 = Number(Atributo2);
+  const valor3 = Number(Atributo3);
+  const valorAtr = valor1 + valor2 + valor3;
+  if (Nome.length <= 2) {
     return this.setState({ submit: true });
   }
-  if (url.length <= 1) {
+  if (url.length <= 2) {
     return this.setState({ submit: true });
   }
-  if (descricao.length <= 1) {
+  if (descricao.length <= 2) {
     return this.setState({ submit: true });
   }
   if (Atributo1 > valorMax) {
@@ -97,7 +100,7 @@ desabilitar = () => {
   if (Atributo3 < valorMinimo) {
     return this.setState({ submit: true });
   }
-  if (Atributo1 + Atributo2 + Atributo3 === valorTotalMax) {
+  if (valorAtr > valorTotalMax) {
     return this.setState({ submit: true });
   }
   return this.isSaveButtonDisabled();
@@ -105,8 +108,8 @@ desabilitar = () => {
 
  handleChange = (evento) => {
    const { name, type, checked, value } = evento.target;
-   this.setState({ [name]: type === 'checkbox' ? checked : value });
-   this.desabilitar();
+   this.setState({ [name]: type === 'checkbox' ? checked : value },
+     () => this.desabilitar());
  }
 
  render() {
