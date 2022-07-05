@@ -13,9 +13,10 @@ class App extends React.Component {
       Atributo3: 0,
       url: '',
       Raridade: 'normal',
-      Tryunfo: true,
+      Tryunfo: false,
       submit: true,
       salvo: [],
+      trunfo: true,
     };
   }
 
@@ -79,7 +80,7 @@ desabilitar = () => {
  limparESalvar = (evento) => {
    evento.preventDefault();
    const { Nome, descricao, Atributo1, Atributo2, Atributo3,
-     url, Raridade, Tryunfo } = this.state;
+     url, Raridade, Tryunfo, trunfo } = this.state;
    this.setState((prevState) => ({
      salvo: [...prevState.salvo, {
        NomeSalvo: Nome,
@@ -89,8 +90,11 @@ desabilitar = () => {
        Atributo3Salvo: Atributo3,
        urlSalvo: url,
        RaridadeSalvo: Raridade,
-       TryunfoSalvo: Tryunfo }],
+       TryunfoSalvo: Tryunfo,
+       trunfoSalvo: trunfo,
+     }],
    }));
+   this.setState({ trunfo: !Tryunfo });
    this.setState({
      Nome: '',
      descricao: '',
@@ -104,60 +108,71 @@ desabilitar = () => {
    });
  }
 
- render() {
-   const {
-     Nome,
-     descricao,
-     Atributo1,
-     Atributo2,
-     Atributo3,
-     url,
-     Raridade,
-     Tryunfo,
-     submit,
-     salvo,
-   } = this.state;
-   return (
-     <div>
-       <h1>Tryunfo</h1>
-       <Form
-         cardName={ Nome }
-         cardDescription={ descricao }
-         cardAttr1={ Atributo1 }
-         cardAttr2={ Atributo2 }
-         cardAttr3={ Atributo3 }
-         cardImage={ url }
-         cardRare={ Raridade }
-         cardTrunfo={ Tryunfo }
-         hasTrunfo
-         isSaveButtonDisabled={ submit }
-         onInputChange={ this.handleChange }
-         onSaveButtonClick={ this.limparESalvar }
-       />
-       <Card
-         cardName={ Nome }
-         cardDescription={ descricao }
-         cardAttr1={ Atributo1 }
-         cardAttr2={ Atributo2 }
-         cardAttr3={ Atributo3 }
-         cardImage={ url }
-         cardRare={ Raridade }
-         cardTrunfo={ Tryunfo }
-       />
-       { salvo.map((salvo2) => (
-         <Card
-           key={ salvo2.NomeSalvo }
-           cardName={ salvo2.NomeSalvo }
-           cardDescription={ salvo2.descricaoSalvo }
-           cardAttr1={ salvo2.Atributo1Salvo }
-           cardAttr2={ salvo2.Atributo2Salvo }
-           cardAttr3={ salvo2.Atributo3Salvo }
-           cardImage={ salvo2.urlSalvo }
-           cardRare={ salvo2.RaridadeSalvo }
-           cardTrunfo={ salvo2.TryunfoSalvo }
-         />)) }
-     </div>);
- }
+hasTrunfo = () => {
+  const { salvo } = this.state;
+  return salvo.find((get) => {
+    if (get.TryunfoSalvo === true) {
+      return this.setState({ trunfo: false });
+    } return this.setState({ trunfo: true });
+  });
+}
+
+render() {
+  const {
+    Nome,
+    descricao,
+    Atributo1,
+    Atributo2,
+    Atributo3,
+    url,
+    Raridade,
+    Tryunfo,
+    submit,
+    salvo,
+    trunfo,
+  } = this.state;
+  return (
+    <div>
+      <h1>Tryunfo</h1>
+      <Form
+        cardName={ Nome }
+        cardDescription={ descricao }
+        cardAttr1={ Atributo1 }
+        cardAttr2={ Atributo2 }
+        cardAttr3={ Atributo3 }
+        cardImage={ url }
+        cardRare={ Raridade }
+        cardTrunfo={ Tryunfo }
+        hasTrunfo={ trunfo }
+        isSaveButtonDisabled={ submit }
+        onInputChange={ this.handleChange }
+        onSaveButtonClick={ this.limparESalvar }
+      />
+      <Card
+        cardName={ Nome }
+        cardDescription={ descricao }
+        cardAttr1={ Atributo1 }
+        cardAttr2={ Atributo2 }
+        cardAttr3={ Atributo3 }
+        cardImage={ url }
+        cardRare={ Raridade }
+        cardTrunfo={ Tryunfo }
+      />
+      { salvo.map((salvo2) => (
+        <Card
+          key={ salvo2.NomeSalvo }
+          cardName={ salvo2.NomeSalvo }
+          cardDescription={ salvo2.descricaoSalvo }
+          cardAttr1={ salvo2.Atributo1Salvo }
+          cardAttr2={ salvo2.Atributo2Salvo }
+          cardAttr3={ salvo2.Atributo3Salvo }
+          cardImage={ salvo2.urlSalvo }
+          cardRare={ salvo2.RaridadeSalvo }
+          cardTrunfo={ salvo2.TryunfoSalvo }
+          hasTrunfo={ salvo2.trunfoSalvo }
+        />)) }
+    </div>);
+}
 }
 
 export default App;
