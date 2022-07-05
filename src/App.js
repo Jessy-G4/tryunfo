@@ -2,10 +2,6 @@ import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
 
-// JESSY DO FUTURO A FUNÇÃO limparESalvar FOI COMENTANDA UNS ELEMENTOS PARA EVITAR ERROS DE LINT, NÃO ESQUECE DE DESCOMENTAR QUANDO FOR USAR!!!
-// JESSY DO FUTURO A FUNÇÃO limparESalvar FOI COMENTANDA UNS ELEMENTOS PARA EVITAR ERROS DE LINT, NÃO ESQUECE DE DESCOMENTAR QUANDO FOR USAR!!!
-// JESSY DO FUTURO A FUNÇÃO limparESalvar FOI COMENTANDA UNS ELEMENTOS PARA EVITAR ERROS DE LINT, NÃO ESQUECE DE DESCOMENTAR QUANDO FOR USAR!!!
-
 class App extends React.Component {
   constructor() {
     super();
@@ -19,6 +15,7 @@ class App extends React.Component {
       Raridade: 'normal',
       Tryunfo: true,
       submit: true,
+      salvo: [],
     };
   }
 
@@ -79,21 +76,21 @@ desabilitar = () => {
      () => this.desabilitar());
  }
 
- limparESalvar = () => {
-   // NÃO ESQUECE DE COLOCAR O PARAMETRO DA FUNÇÃO "EVENTO"!!!!
-   //  evento.preventDefault();
-   //  const { Nome, descricao, Atributo1, Atributo2, Atributo3,
-   //    url, Raridade, Tryunfo } = this.state;
-   //  const salvar = [{
-   //    NomeSalvo: Nome,
-   //    descricaoSalvo: descricao,
-   //    Atributo1Salvo: Atributo1,
-   //    Atributo2Salvo: Atributo2,
-   //    Atributo3Salvo: Atributo3,
-   //    urlSalvo: url,
-   //    RaridadeSalvo: Raridade,
-   //    TryunfoSalvo: Tryunfo,
-   //  }];
+ limparESalvar = (evento) => {
+   evento.preventDefault();
+   const { Nome, descricao, Atributo1, Atributo2, Atributo3,
+     url, Raridade, Tryunfo } = this.state;
+   this.setState((prevState) => ({
+     salvo: [...prevState.salvo, {
+       NomeSalvo: Nome,
+       descricaoSalvo: descricao,
+       Atributo1Salvo: Atributo1,
+       Atributo2Salvo: Atributo2,
+       Atributo3Salvo: Atributo3,
+       urlSalvo: url,
+       RaridadeSalvo: Raridade,
+       TryunfoSalvo: Tryunfo }],
+   }));
    this.setState({
      Nome: '',
      descricao: '',
@@ -118,6 +115,7 @@ desabilitar = () => {
      Raridade,
      Tryunfo,
      submit,
+     salvo,
    } = this.state;
    return (
      <div>
@@ -146,6 +144,18 @@ desabilitar = () => {
          cardRare={ Raridade }
          cardTrunfo={ Tryunfo }
        />
+       { salvo.map((salvo2) => (
+         <Card
+           key={ salvo2.NomeSalvo }
+           cardName={ salvo2.NomeSalvo }
+           cardDescription={ salvo2.descricaoSalvo }
+           cardAttr1={ salvo2.Atributo1Salvo }
+           cardAttr2={ salvo2.Atributo2Salvo }
+           cardAttr3={ salvo2.Atributo3Salvo }
+           cardImage={ salvo2.urlSalvo }
+           cardRare={ salvo2.RaridadeSalvo }
+           cardTrunfo={ salvo2.TryunfoSalvo }
+         />)) }
      </div>);
  }
 }
