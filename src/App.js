@@ -16,7 +16,7 @@ class App extends React.Component {
       Tryunfo: false,
       submit: true,
       salvo: [],
-      trunfo: true,
+      trunfo: false,
     };
   }
 
@@ -94,7 +94,7 @@ desabilitar = () => {
        trunfoSalvo: trunfo,
      }],
    }));
-   this.setState({ trunfo: !Tryunfo });
+   //  this.setState({ trunfo: Tryunfo });
    this.setState({
      Nome: '',
      descricao: '',
@@ -103,76 +103,76 @@ desabilitar = () => {
      Atributo3: 0,
      url: '',
      Raridade: 'normal',
-     Tryunfo: true,
+     Tryunfo: false,
      submit: true,
-   });
+   }, () => this.hasTrunfo());
  }
 
-hasTrunfo = () => {
-  const { salvo } = this.state;
-  return salvo.find((get) => {
-    if (get.TryunfoSalvo === true) {
-      return this.setState({ trunfo: false });
-    } return this.setState({ trunfo: true });
-  });
-}
+ hasTrunfo = () => {
+   const { salvo } = this.state;
+   if (salvo.some((get) => get.trunfoSalvo === true)) {
+     this.setState({ trunfo: false });
+   } else {
+     this.setState({ trunfo: true });
+   }
+ }
 
-render() {
-  const {
-    Nome,
-    descricao,
-    Atributo1,
-    Atributo2,
-    Atributo3,
-    url,
-    Raridade,
-    Tryunfo,
-    submit,
-    salvo,
-    trunfo,
-  } = this.state;
-  return (
-    <div>
-      <h1>Tryunfo</h1>
-      <Form
-        cardName={ Nome }
-        cardDescription={ descricao }
-        cardAttr1={ Atributo1 }
-        cardAttr2={ Atributo2 }
-        cardAttr3={ Atributo3 }
-        cardImage={ url }
-        cardRare={ Raridade }
-        cardTrunfo={ Tryunfo }
-        hasTrunfo={ trunfo }
-        isSaveButtonDisabled={ submit }
-        onInputChange={ this.handleChange }
-        onSaveButtonClick={ this.limparESalvar }
-      />
-      <Card
-        cardName={ Nome }
-        cardDescription={ descricao }
-        cardAttr1={ Atributo1 }
-        cardAttr2={ Atributo2 }
-        cardAttr3={ Atributo3 }
-        cardImage={ url }
-        cardRare={ Raridade }
-        cardTrunfo={ Tryunfo }
-      />
-      { salvo.map((salvo2) => (
-        <Card
-          key={ salvo2.NomeSalvo }
-          cardName={ salvo2.NomeSalvo }
-          cardDescription={ salvo2.descricaoSalvo }
-          cardAttr1={ salvo2.Atributo1Salvo }
-          cardAttr2={ salvo2.Atributo2Salvo }
-          cardAttr3={ salvo2.Atributo3Salvo }
-          cardImage={ salvo2.urlSalvo }
-          cardRare={ salvo2.RaridadeSalvo }
-          cardTrunfo={ salvo2.TryunfoSalvo }
-          hasTrunfo={ salvo2.trunfoSalvo }
-        />)) }
-    </div>);
-}
+ render() {
+   const {
+     Nome,
+     descricao,
+     Atributo1,
+     Atributo2,
+     Atributo3,
+     url,
+     Raridade,
+     Tryunfo,
+     submit,
+     salvo,
+     trunfo,
+   } = this.state;
+   return (
+     <div>
+       <h1>Tryunfo</h1>
+       <Form
+         cardName={ Nome }
+         cardDescription={ descricao }
+         cardAttr1={ Atributo1 }
+         cardAttr2={ Atributo2 }
+         cardAttr3={ Atributo3 }
+         cardImage={ url }
+         cardRare={ Raridade }
+         cardTrunfo={ Tryunfo }
+         hasTrunfo={ trunfo }
+         isSaveButtonDisabled={ submit }
+         onInputChange={ this.handleChange }
+         onSaveButtonClick={ this.limparESalvar }
+       />
+       <Card
+         cardName={ Nome }
+         cardDescription={ descricao }
+         cardAttr1={ Atributo1 }
+         cardAttr2={ Atributo2 }
+         cardAttr3={ Atributo3 }
+         cardImage={ url }
+         cardRare={ Raridade }
+         cardTrunfo={ Tryunfo }
+       />
+       { salvo.map((salvo2) => (
+         <Card
+           key={ salvo2.NomeSalvo }
+           cardName={ salvo2.NomeSalvo }
+           cardDescription={ salvo2.descricaoSalvo }
+           cardAttr1={ salvo2.Atributo1Salvo }
+           cardAttr2={ salvo2.Atributo2Salvo }
+           cardAttr3={ salvo2.Atributo3Salvo }
+           cardImage={ salvo2.urlSalvo }
+           cardRare={ salvo2.RaridadeSalvo }
+           cardTrunfo={ salvo2.TryunfoSalvo }
+           hasTrunfo={ salvo2.trunfoSalvo }
+         />)) }
+     </div>);
+ }
 }
 
 export default App;
